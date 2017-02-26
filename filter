@@ -1,0 +1,48 @@
+ private void search_btn_Click(object sender, EventArgs e)
+        {
+            List<string> list = new List<string>();
+
+            if (!string.IsNullOrEmpty(id.Text))
+                list.Add("users.id="+id.Text);
+
+
+            if ( !string.IsNullOrEmpty(order_id.Text) )
+                list.Add("orders.id="+order_id.Text);
+
+
+            if (!string.IsNullOrEmpty(personalId.Text))
+                list.Add("users.personal_id="+personalId.Text);
+
+
+            string[] name;
+
+            if( !string.IsNullOrEmpty( fullname.Text ))
+            {
+                // check if contains whitespace
+                if ((fullname.Text.Trim()).Contains(" "))
+                {
+                    name = fullname.Text.Split(" ".ToCharArray());
+                    list.Add("users.firstname=" + '"'+name[0]+'"');
+                    list.Add("users.lastname=" + '"'+name[1]+'"');
+                }
+                else
+                {
+                    list.Add("users.firstname=" + '"'+fullname.Text+'"' + " OR users.lastname=" + '"'+fullname.Text+'"');
+                }
+
+            }
+
+            string where = "";
+            int i = 0;
+
+            foreach (string element in list)
+            {
+                if( i == 0)
+                    where += element;
+                else
+                    where += " AND " + element;
+
+                i++;
+            }
+
+        }
