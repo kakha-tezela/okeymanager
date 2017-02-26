@@ -46,3 +46,18 @@
             }
 
         }
+        
+        
+        
+        
+        
+        
+        
+        
+        // php side
+        public function search( Request $request )
+        {
+           return DB::select('Select * from orders Left JOIN users ON orders.user_id = users.id where '.$request->where );
+        }
+
+
