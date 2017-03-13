@@ -1,0 +1,33 @@
+     
+        public static void Main ()  
+        {  
+           
+           // Get the object used to communicate with the server.  
+            
+            FtpWebRequest request = (FtpWebRequest)WebRequest.Create("ftp://www.contoso.com/test.htm");  
+            request.Method = WebRequestMethods.Ftp.UploadFile;  
+            request.Credentials = new NetworkCredential ("anonymous","janeDoe@contoso.com");  
+  
+
+            // Copy the contents of the file to the request stream.  
+           
+           StreamReader sourceStream = new StreamReader("testfile.txt");  
+            byte [] fileContents = Encoding.UTF8.GetBytes(   sourceStream.ReadToEnd()   );  
+            sourceStream.Close();  
+            request.ContentLength = fileContents.Length;  
+  
+
+            // Write File Contents To Stream
+
+            Stream requestStream = request.GetRequestStream();  
+            requestStream.Write(  fileContents, 0, fileContents.Length );  
+            requestStream.Close();  
+  
+            FtpWebResponse response = (FtpWebResponse)request.GetResponse();  
+  
+            }  
+            
+            
+            // Recommended Reading
+            http://www.vcskicks.com/csharp_ftp_upload2.php
+   
